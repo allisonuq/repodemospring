@@ -1,0 +1,225 @@
+
+<div class="contenedor">
+
+  <h1> Registro de Vehículos</h1>
+  <p class="subtitulo">Sistema de registro vehicular</p>
+
+  <div class="formulario">
+
+    <h2>Registrar vehículo</h2>
+
+    <form #formulario="ngForm"
+          (ngSubmit)="onSubmit(formulario)">
+
+      <div class="campos">
+
+        <!-- 1. PLACA -->
+        <div class="campo">
+          <label>Placa:</label>
+          <input type="text"
+                 name="placa"
+                 ngModel
+                 required
+                 pattern="[A-Za-z0-9-]{6,8}"
+                 #placa="ngModel"
+                 placeholder="ABC123">
+
+          <small *ngIf="placa.invalid && (placa.touched || formulario.submitted)">
+            Ingrese una placa válida de 6 a 8 caracteres.
+          </small>
+        </div>
+
+        <!-- 2. MARCA -->
+        <div class="campo">
+          <label>Marca:</label>
+          <select name="marca" ngModel required #marca="ngModel">
+            <option value="">Seleccione una marca</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Hyundai">Hyundai</option>
+            <option value="Kia">Kia</option>
+            <option value="Nissan">Nissan</option>
+            <option value="Chevrolet">Chevrolet</option>
+          </select>
+
+          <small *ngIf="marca.invalid && (marca.touched || formulario.submitted)">
+            Seleccione una marca.
+          </small>
+        </div>
+
+        <!-- 3. MODELO -->
+        <div class="campo">
+          <label>Modelo:</label>
+          <input type="text"
+                 name="modelo"
+                 ngModel
+                 required
+                 minlength="2"
+                 #modelo="ngModel"
+                 placeholder="Corolla">
+
+          <small *ngIf="modelo.invalid && (modelo.touched || formulario.submitted)">
+            El modelo debe tener al menos 2 caracteres.
+          </small>
+        </div>
+
+        <!-- 4. AÑO -->
+        <div class="campo">
+          <label>Año:</label>
+          <input type="number"
+                 name="anio"
+                 ngModel
+                 required
+                 min="1950"
+                 max="2026"
+                 #anio="ngModel"
+                 placeholder="2026">
+
+          <small *ngIf="anio.invalid && (anio.touched || formulario.submitted)">
+            El año debe estar entre 1950 y 2026.
+          </small>
+        </div>
+
+        <!-- 5. KILOMETRAJE -->
+        <div class="campo">
+          <label>Kilometraje:</label>
+          <input type="number"
+                 name="kilometraje"
+                 ngModel
+                 required
+                 min="0"
+                 max="1000000"
+                 #kilometraje="ngModel"
+                 placeholder="25000">
+
+          <small *ngIf="kilometraje.invalid && (kilometraje.touched || formulario.submitted)">
+            El kilometraje debe estar entre 0 y 1000000.
+          </small>
+        </div>
+
+        <!-- 6. TIPO -->
+        <div class="campo">
+          <label>Tipo de vehículo:</label>
+
+          <div class="opciones">
+            <label>
+              <input type="radio"
+                     name="tipo"
+                     value="Automóvil"
+                     ngModel
+                     required
+                     #tipo="ngModel">
+              Automóvil
+            </label>
+
+            <label>
+              <input type="radio"
+                     name="tipo"
+                     value="Camioneta"
+                     ngModel
+                     required>
+              Camioneta
+            </label>
+
+            <label>
+              <input type="radio"
+                     name="tipo"
+                     value="Motocicleta"
+                     ngModel
+                     required>
+              Motocicleta
+            </label>
+          </div>
+
+          <small *ngIf="tipo.invalid && (tipo.touched || formulario.submitted)">
+            Seleccione un tipo de vehículo.
+          </small>
+        </div>
+
+        <!-- 7. COMBUSTIBLE -->
+        <div class="campo">
+          <label>Combustible:</label>
+          <select name="combustible"
+                  ngModel
+                  required
+                  #combustible="ngModel">
+            <option value="">Seleccione combustible</option>
+            <option value="Gasolina">Gasolina</option>
+            <option value="Diésel">Diésel</option>
+            <option value="GLP">GLP</option>
+            <option value="Eléctrico">Eléctrico</option>
+          </select>
+
+          <small *ngIf="combustible.invalid && (combustible.touched || formulario.submitted)">
+            Seleccione el combustible.
+          </small>
+        </div>
+
+        <!-- 8. OBSERVACIONES -->
+        <div class="campo completo">
+          <label>Observaciones:</label>
+          <textarea name="observaciones"
+                    ngModel
+                    required
+                    minlength="5"
+                    #observaciones="ngModel"
+                    placeholder="Escriba alguna observación..."></textarea>
+
+          <small *ngIf="observaciones.invalid && (observaciones.touched || formulario.submitted)">
+            Escriba al menos 5 caracteres.
+          </small>
+        </div>
+
+      </div>
+
+      <button type="submit" [disabled]="formulario.invalid">
+        Registrar vehículo
+      </button>
+
+    </form>
+  </div>
+
+  <!-- TABLA -->
+
+  <div class="tabla">
+
+    <h2>Vehículos registrados</h2>
+
+    <p>Total registrados: {{ vehiculos.length }}</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>N.º</th>
+          <th>Placa</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Año</th>
+          <th>Kilometraje</th>
+          <th>Tipo</th>
+          <th>Combustible</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let v of vehiculos; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ v.placa }}</td>
+          <td>{{ v.marca }}</td>
+          <td>{{ v.modelo }}</td>
+          <td>{{ v.anio }}</td>
+          <td>{{ v.kilometraje }}</td>
+          <td>{{ v.tipo }}</td>
+          <td>{{ v.combustible }}</td>
+          <td>{{ v.observaciones }}</td>
+        </tr>
+
+        <tr *ngIf="vehiculos.length === 0">
+          <td colspan="9">No hay vehículos registrados.</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

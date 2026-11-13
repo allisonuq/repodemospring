@@ -1,0 +1,17 @@
+
+<header>
+  <nav class="navbar">
+    <span class="menu-toggle" (click)="toggleMenu()">☰</span>
+    <span class="logo">Reservas Deportivas</span>
+
+    <ul class="nav-links" [class.active]="menuAbierto">
+      <li>
+        <a routerLink="/reservas" (click)="menuAbierto = false">
+          Reservas
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<router-outlet />

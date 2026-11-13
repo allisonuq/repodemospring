@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+  .contenedor {
+    padding: 15px;
+  }
+
+  th,
+  td {
+    padding: 9px;
+    font-size: 13px;
+  }
+}
